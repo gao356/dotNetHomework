@@ -6,15 +6,34 @@ namespace find_prime_num
     {
         static void Main(string[] args)
         {
-            int NumOfPrime = 0; //记录已经输出的素数数量
-            for (int tem = 2; tem <= 100; tem++)
+            
+            bool[] arr = new bool[101]; //若arr[index]是true代表数字index不是素数
+            for (int tem = 2; tem <= 10; tem++)
             {
                 if (IsPrimeNum(tem))
                 {
-                    NumOfPrime++;
-                    Console.Write(tem + "\t");
-                    if (NumOfPrime % 10 == 0) Console.WriteLine();
+                    int BaseNum = tem * 2;
+                    while (BaseNum <= 100)
+                    {
+                        arr[BaseNum] = true;
+                        BaseNum += tem;
+                    }
                 }
+            }
+            ShowArray(arr);
+        }
+
+        static void ShowArray(bool[] arr)
+        {
+            int Num = 0;
+            for (int i = 2; i <= 100; i++)
+            {
+                if (!arr[i])
+                {
+                    Console.Write(i + "\t");
+                    Num++;
+                } 
+                if (Num % 10 == 0) Console.Write("\n");
             }
         }
 

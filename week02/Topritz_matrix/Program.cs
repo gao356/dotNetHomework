@@ -8,7 +8,7 @@ namespace Topritz_matrix
         {
             const int M = 3;
             const int N = 4;
-            int[,] matrix = new int[M, N] { { 1, 2, 3, 4 }, { 5, 3, 2, 3 }, { 9, 5, 1, 2 } };
+            int[,] matrix = new int[M, N] { { 1, 2, 3, 4 }, { 5, 1, 2, 3 }, { 9, 5, 1, 2 } };
             bool ans = true;
 
             int KeyNum = matrix[0, 0];
