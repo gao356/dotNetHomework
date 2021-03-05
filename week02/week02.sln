@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "primefactor", "week02\primefactor.csproj", "{DBB849B8-589E-4E72-B9B2-543E26A973DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "int_array", "int_array\int_array.csproj", "{3E0AF5E3-45B0-4867-8B42-2CCE476303D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "int_array", "int_array\int_array.csproj", "{3E0AF5E3-45B0-4867-8B42-2CCE476303D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "find_prime_num", "find_prime_num\find_prime_num.csproj", "{3BD09CAF-E149-4803-9B37-822FFFCE075E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "find_prime_num", "find_prime_num\find_prime_num.csproj", "{3BD09CAF-E149-4803-9B37-822FFFCE075E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Topritz_matrix", "Topritz_matrix\Topritz_matrix.csproj", "{C2ADD290-7F8F-443A-82BA-351D6EB63A6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Topritz_matrix", "Topritz_matrix\Topritz_matrix.csproj", "{C2ADD290-7F8F-443A-82BA-351D6EB63A6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "primefactor", "prime_factor\primefactor.csproj", "{E8A2D129-3954-4207-883F-467FF2D21823}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DBB849B8-589E-4E72-B9B2-543E26A973DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DBB849B8-589E-4E72-B9B2-543E26A973DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DBB849B8-589E-4E72-B9B2-543E26A973DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DBB849B8-589E-4E72-B9B2-543E26A973DA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3E0AF5E3-45B0-4867-8B42-2CCE476303D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3E0AF5E3-45B0-4867-8B42-2CCE476303D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E0AF5E3-45B0-4867-8B42-2CCE476303D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{C2ADD290-7F8F-443A-82BA-351D6EB63A6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2ADD290-7F8F-443A-82BA-351D6EB63A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2ADD290-7F8F-443A-82BA-351D6EB63A6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8A2D129-3954-4207-883F-467FF2D21823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8A2D129-3954-4207-883F-467FF2D21823}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8A2D129-3954-4207-883F-467FF2D21823}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8A2D129-3954-4207-883F-467FF2D21823}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
