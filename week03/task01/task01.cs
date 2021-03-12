@@ -24,6 +24,7 @@ namespace task01
 
         public double GetArea()
         {
+            if (!this.IsValid()) return 0; //若边长不合法则输出0
             return baseLength * height * 0.5;
         }
 
@@ -49,6 +50,7 @@ namespace task01
 
         public double GetArea()
         {
+            if (!this.IsValid()) return 0;
             return baseLength * height;
         }
 
