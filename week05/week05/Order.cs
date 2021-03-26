@@ -32,6 +32,7 @@ namespace week05
 
         public double getAndSetTotalPrice()
         {
+            TotalPrice = 0;
             foreach (OrderDetails d in OrderDetails)
             {
                 TotalPrice += d.getTotalPrice();

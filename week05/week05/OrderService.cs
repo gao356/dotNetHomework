@@ -79,7 +79,7 @@ namespace week05
         {
             List<Order> list = new List<Order>();
             var _query = from order in orderList where order.getAndSetTotalPrice() >= from_ orderby order.ID select order;
-            var query = from order in _query where order.TotalPrice <= to orderby order.ID select order;
+            var query = from order in _query where order.getAndSetTotalPrice() <= to orderby order.ID select order;
             if (query.FirstOrDefault() == null) return list;
             else
             {
@@ -99,6 +99,14 @@ namespace week05
         public void Sort(IComparer<Order> comparer)
         {
             orderList.Sort(comparer);
+        }
+
+        public void ShowAllOrder()
+        {
+            foreach (Order o in orderList)
+            {
+                Console.WriteLine(o);
+            }
         }
     }
 }

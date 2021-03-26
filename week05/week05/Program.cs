@@ -20,19 +20,25 @@ namespace week05
             order1.AddDetail(new OrderDetails(good1, 3));
             order1.AddDetail(new OrderDetails(good1, 7));
             order1.AddDetail(new OrderDetails(good3, 4));
+            //order1.AddDetail(new OrderDetails(good3, 4));
             order2.AddDetail(new OrderDetails(good2, 6));
-            order2.AddDetail(new OrderDetails(good3, 6));
+            order2.AddDetail(new OrderDetails(good3, 9));
             OrderService service = new OrderService();
             service.AddOrder(order1);
             service.AddOrder(order2);
+            //service.AddOrder(order1);
 
-            List<Order> list1 = service.SearchOrderByGoodName("Screen");
+            //service.ShowAllOrder();
+
+            List<Order> list1 = service.SearchOrderByTotalPrice(60000,700000);
             foreach (Order o in list1)
             {
                 Console.WriteLine(o);
             }
+            //Console.WriteLine(service.SearchOrderById(123));
 
-            /* Console.WriteLine(service.SearchOrderById(123));*/
+
+
         }
     }
 }
