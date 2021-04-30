@@ -34,6 +34,8 @@ namespace week09
             this.btn_start = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.TB_website = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.successText = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // URL
@@ -82,11 +84,31 @@ namespace week09
             this.TB_website.Size = new System.Drawing.Size(527, 30);
             this.TB_website.TabIndex = 4;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 229);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(67, 15);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "爬行日志";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // successText
+            // 
+            this.successText.Location = new System.Drawing.Point(12, 248);
+            this.successText.Name = "successText";
+            this.successText.Size = new System.Drawing.Size(632, 431);
+            this.successText.TabIndex = 6;
+            this.successText.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(691, 214);
+            this.ClientSize = new System.Drawing.Size(656, 691);
+            this.Controls.Add(this.successText);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.TB_website);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn_start);
@@ -106,6 +128,8 @@ namespace week09
         private System.Windows.Forms.Button btn_start;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox TB_website;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.RichTextBox successText;
     }
 }
 

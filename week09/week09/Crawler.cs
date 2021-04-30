@@ -13,6 +13,7 @@ namespace week09
 {
     class SimpleCrawler
     {
+        public RichTextBox successTextBox { get; set; }
         public Hashtable urls = new Hashtable();
         private int count = 0;
         public string CertainWebsite{ get; set; }
@@ -40,12 +41,12 @@ namespace week09
                     continue; 
                 }
 
-                MessageBox.Show("爬行" + current + "页面!");
+                successTextBox.Text += ("爬行" + current + "页面!\n");
                 string html = DownLoad(current); // 下载
                 urls[current] = true;
                 count++;
                 Parse(html, current);//解析,并加入新的链接
-                MessageBox.Show("爬行" + current + "结束");
+                successTextBox.Text += ("爬行" + current + "结束\n");
 
             }
             MessageBox.Show("全部爬行结束");
@@ -64,7 +65,7 @@ namespace week09
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + ":" + url);
+                successTextBox.Text += (ex.Message + ":" + url + "\n");
                 return "";
             }
         }
@@ -99,6 +100,10 @@ namespace week09
                 }
 
                 if (strRef.Length == 0) continue;
+                if (!strRef.Contains("http"))
+                {
+                    strRef = "http:" + strRef;
+                }
                 if (urls[strRef] == null) urls[strRef] = false;
             }
         }

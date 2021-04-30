@@ -26,10 +26,16 @@ namespace week09
             }
 
             SimpleCrawler myCrawler = new SimpleCrawler();
+            myCrawler.successTextBox = successText;
             myCrawler.CertainWebsite = TB_website.Text;
             string startUrl = URLTextBox.Text;
             myCrawler.urls.Add(startUrl, false);//加入初始页面
             new Thread(myCrawler.Crawl).Start();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
