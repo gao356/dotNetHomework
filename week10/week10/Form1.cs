@@ -25,7 +25,7 @@ namespace week10
         private void btn_start_Click(object sender, EventArgs e)
         {
             crawler = new Crawler();
-            crawler.MaxNum = 100;
+            crawler.MaxNum = 20;
             t = new Thread(crawler.Crawl);
 
             string originUrl = tb_Url.Text;

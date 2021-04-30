@@ -16,12 +16,13 @@ namespace week10
         public Hashtable urls = Hashtable.Synchronized(new Hashtable());
         public int MaxNum { get; set; }
         private int count = 0;
-        private ArrayList taskList;
+        private int numOfTask = 0;
+        /*private ArrayList taskList;*/
         public string CertainWebsite { get; set; }
 
         public void Crawl()
         {
-            taskList = ArrayList.Synchronized(new ArrayList());
+            /*taskList = ArrayList.Synchronized(new ArrayList());*/
             Console.WriteLine("开始爬行了.... ");
             while (true)
             {
@@ -32,10 +33,13 @@ namespace week10
                     current = url;
                 }
 
-                if (current == null || count > MaxNum) 
+                if (count > MaxNum) break;
+
+                if (current == null) 
                 {
-                    if (isAllFinished(taskList)) break;
-                    else continue;
+                    if (numOfTask > 0) continue;
+                    /*if (isAllFinished(taskList)) break;
+                    else continue;*/
                     /*Task.WaitAll((Task<string>[])taskList.ToArray());*/
                 }
 
@@ -49,7 +53,13 @@ namespace week10
                 }
 
                 urls[current] = true;
-                // taskList.Add(Task.Run(() => DownLoadAndParse(current)));
+                lock (this)
+                {
+                    numOfTask++;
+                }
+                while (numOfTask >= 5) { }
+                Task.Run(() => DownLoadAndParse(current));
+
                 Task.WaitAll(Task.Run(() => DownLoadAndParse(current)));
                 /*Thread.Sleep(5000);*/
 
@@ -90,7 +100,7 @@ namespace week10
             {
                 lock (this)
                 {
-                    logTextBox.Text += (ex.Message + ":" + url + "\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
+                    logTextBox.Text += (ex.Message + ":" + url + "\n");
                 }
                 return "";
             }
@@ -98,7 +108,8 @@ namespace week10
             {
                 lock (this)
                 {
-                    logTextBox.Text += ("爬行" + url + "结束\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
+                    logTextBox.Text += ("爬行" + url + "结束\n");
+                    numOfTask--;
                 }
             }
         }
@@ -135,10 +146,14 @@ namespace week10
                 if (strRef.Length == 0) continue;
                 if (!strRef.Contains("http"))
                 {
-                    if (!strRef.Contains("//")) strRef = "//" + strRef;
-                    strRef = "http:" + strRef;
+                    /*if (!strRef.Contains("//")) strRef = "//" + strRef;
+                    strRef = "http:" + strRef;*/
                 }
-                if (urls[strRef] == null) urls[strRef] = false;
+                else 
+                {
+                    if (urls[strRef] == null) urls[strRef] = false; 
+                }
+               
             }
         }
     }
