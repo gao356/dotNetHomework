@@ -13,7 +13,7 @@ namespace week10
     class Crawler
     {
         public RichTextBox logTextBox { get; set; }
-        public Hashtable urls = Hashtable.Synchronized(new Hashtable());
+        public Hashtable urls = null;
         public int MaxNum { get; set; }
         private int count = 0;
         private int numOfTask = 0;
@@ -60,11 +60,14 @@ namespace week10
                 while (numOfTask >= 5) { }
                 Task.Run(() => DownLoadAndParse(current));
 
-                Task.WaitAll(Task.Run(() => DownLoadAndParse(current)));
+                // Task.WaitAll(Task.Run(() => DownLoadAndParse(current)));
                 /*Thread.Sleep(5000);*/
 
             }
             MessageBox.Show("全部爬行结束");
+            numOfTask = 0;
+            count = 0;
+            // urls = Hashtable.Synchronized(new Hashtable());
         }
 
         private bool isAllFinished(ArrayList tl)

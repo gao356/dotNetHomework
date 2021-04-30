@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -37,6 +38,7 @@ namespace week10
             crawler.logTextBox = tb_Log;
             crawler.CertainWebsite = tb_CertainWebsite.Text;
             string startUrl = tb_Url.Text;
+            crawler.urls = Hashtable.Synchronized(new Hashtable());
             crawler.urls.Add(startUrl, false);//加入初始页面
             t.Start();
         }
