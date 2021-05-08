@@ -10,7 +10,7 @@ namespace week11
 {
     class OrderContext:DbContext
     {
-        public OrderContext() : base("OrderDatabase")
+        public OrderContext() : base("name=OrderDatabase")
         {
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<OrderContext>());
         }

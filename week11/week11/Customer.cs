@@ -22,6 +22,13 @@ namespace week08
             Address = addr;
         }
 
+        public Customer(string n, string addr, int id)
+        {
+            Name = n;
+            Address = addr;
+            ID = id;
+        }
+
         public override bool Equals(object obj)
         {
             return obj is Customer customer &&

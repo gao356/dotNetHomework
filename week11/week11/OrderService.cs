@@ -19,10 +19,29 @@ namespace week08
 
         public void AddOrder(Order o)
         {
-            if (orderList.IndexOf(o) != -1) throw new Exception("This order has existed");
+            // if (orderList.IndexOf(o) != -1) throw new Exception("This order has existed");
             // orderList.Add(o);
             using (var db = new OrderContext()) {
                 db.Order.Add(o);
+                var cus = db.Customer.Where(cu => cu.ID == o.Customer.ID).FirstOrDefault();
+                if (cus == null)
+                {
+                    db.Customer.Add(new Customer(o.Customer.Name, o.Customer.Address, o.Customer.ID));
+                }
+                for (int i = 0; i < o.OrderDetails.Count;i++) // (OrderDetails od in o.OrderDetails)
+                {
+                    OrderDetails od = o.OrderDetails[i];
+                    // OrderDetail newOd = new OrderDetail();
+                    // newOd.
+                    var good = db.Good.Where(g => g.ID == od.goods.ID).FirstOrDefault();
+                    if (good == null)
+                    {
+                        db.Good.Add(new Good(od.goods.Price, od.goods.Name, od.goods.ID));
+                    }
+                    od.GoodID = od.goods.ID;
+                    od.OrderID = o.ID;
+                    db.OrderDetails.Add(od);
+                }
                 db.SaveChanges();
             }
         }
@@ -34,7 +53,7 @@ namespace week08
             orderList.Remove(o);*/
             using (var context = new OrderContext())
             {
-                var order = context.Order.Include("OrderDetails").Include("Good").Include("Customer").FirstOrDefault(o => o.ID == id);
+                var order = context.Order.Include("OrderDetails").FirstOrDefault(o => o.ID == id);
                 if (order != null)
                 {
                     context.Order.Remove(order);
@@ -51,13 +70,15 @@ namespace week08
             // orderList.Add(lastO);
             using (var context = new OrderContext())
             {
-                var order = context.Order.Include("OrderDetails").Include("Good").Include("Customer").FirstOrDefault(o => o.ID == preO.ID);
+                var order = context.Order.Include("OrderDetails").Include("Customer").FirstOrDefault(o => o.ID == preO.ID);
+                for (int i = 0; i < order.OrderDetails.Count; i++)
+                {
+                    order.OrderDetails[i].goods = context.Good.Where(g => g.ID == order.OrderDetails[i].goods.ID).FirstOrDefault();
+                }
                 if (order != null)
                 {
-                    order.Customer = lastO.Customer;
-                    order.OrderDetails = lastO.OrderDetails;
-                    order.TotalPrice = lastO.TotalPrice;
-                    context.SaveChanges();
+                    DeleteOrder(order.ID);
+                    AddOrder(lastO);
                 }
                 else
                 {
@@ -70,9 +91,13 @@ namespace week08
         {
             using (var context = new OrderContext())
             {
-                var query = context.Order.Include("OrderDetails").Include("Good").Include("Customer").Where(i => (i.ID == id));
-               
-                return query.FirstOrDefault();
+                var order = context.Order.Include("OrderDetails").Include("Customer").Where(o => o.ID == id).FirstOrDefault();
+                if (order == null) return null;
+                for (int i = 0; i < order.OrderDetails.Count; i++)
+                {
+                    order.OrderDetails[i].goods = context.Good.Where(g => g.ID == order.OrderDetails[i].goods.ID).FirstOrDefault();
+                }
+                return order;
             }
             return null;
         }
@@ -92,23 +117,31 @@ namespace week08
 
                 }
             }*/
-
             using (var context = new OrderContext())
             {
-                var query = context.Order.Include("OrderDetails").Include("Good").Include("Customer");
+                var order = context.Order.Include("OrderDetails").Include("Customer");
+                if (order == null) return null;
+                
 
-                foreach (var order in query)
+                foreach (var o in order)
                 {
-                    foreach (var detail in order.OrderDetails)
+                    for (int i = 0; i < o.OrderDetails.Count; i++)
+                    {
+                        o.OrderDetails[i].goods = context.Good.Where(g => g.ID == o.OrderDetails[i].goods.ID).FirstOrDefault();
+                    }
+                    foreach (var detail in o.OrderDetails)
                     {
                         if (detail.goods.Name.Equals(name))
                         {
-                            list.Add(order);
+                            list.Add(o);
                             break;
                         }
                     }
                 }
+                
+                // return list;
             }
+
             return list;
         }
 
@@ -117,11 +150,14 @@ namespace week08
             List<Order> list = new List<Order>();
             using (var context = new OrderContext())
             {
-                var query = context.Order.Include("OrderDetails").Include("Good").Include("Customer");
+                list = context.Order.Include("OrderDetails").Include("Customer").ToList<Order>();
 
-                foreach (var order in query)
+                for (int i = 0; i < list.Count; i++)
                 {
-                    list.Add(order);
+                    for (int j = 0; j < list[i].OrderDetails.Count; j++)
+                    {
+                        list[i].OrderDetails[j].goods = context.Good.Where(g => g.ID == list[i].OrderDetails[j].GoodID).FirstOrDefault();
+                    }
                 }
             }
             return list;
@@ -133,14 +169,11 @@ namespace week08
 
             using (var context = new OrderContext())
             {
-                var query = context.Order.Include("OrderDetails").Include("Good").Include("Customer");
+                var query = context.Order.Include("Customer").Where(o => o.Customer.Name == customer).ToList<Order>();
 
-                foreach (var order in query)
+                foreach(var order in query)
                 {
-                    if (order.Customer.Name.Equals(customer))
-                    {
-                        list.Add(order);
-                    }
+                    list.Add(SearchOrderById(order.ID));
                 }
             }
             return list;
@@ -151,13 +184,17 @@ namespace week08
             List<Order> list = new List<Order>();
             using (var context = new OrderContext())
             {
-                var query = context.Order.Include("OrderDetails").Include("Good").Include("Customer")
-                    .Where(o => o.TotalPrice >= from_ && o.TotalPrice <= to);
+                var query = context.Order.Include("OrderDetails").Include("Customer")
+                    .Where(o => o.TotalPrice >= from_ && o.TotalPrice <= to).ToList<Order>();
 
-                foreach (var order in query)
+                for (int i = 0; i < query.Count; i++)
                 {
-                    list.Add(order);
+                    for(int j = 0;j<query[i].OrderDetails.Count;j++)
+                    {
+                        query[i].OrderDetails[j].goods = context.Good.Where(g => g.ID == query[i].OrderDetails[j].GoodID).FirstOrDefault();
+                    }
                 }
+                list = query;
             }
             return list;
         }

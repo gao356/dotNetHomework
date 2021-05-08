@@ -30,6 +30,13 @@ namespace week08
             Name = name;
         }
 
+        public Good(double price, string name, int id)
+        {
+            Price = price;
+            Name = name;
+            ID = id;
+        }
+
         public override string ToString()
         {
             return "Good name:" + Name + ".   Good price:" + Price;
