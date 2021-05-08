@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace week10
 {
@@ -17,12 +18,12 @@ namespace week10
         public int MaxNum { get; set; }
         private int count = 0;
         private int numOfTask = 0;
-        /*private ArrayList taskList;*/
+        private List<Task> taskList;
         public string CertainWebsite { get; set; }
 
         public void Crawl()
         {
-            /*taskList = ArrayList.Synchronized(new ArrayList());*/
+            taskList = new List<Task>();
             Console.WriteLine("开始爬行了.... ");
             while (true)
             {
@@ -37,10 +38,16 @@ namespace week10
 
                 if (current == null) 
                 {
-                    if (numOfTask > 0) continue;
+                    // if (numOfTask > 0) continue;
                     /*if (isAllFinished(taskList)) break;
                     else continue;*/
-                    /*Task.WaitAll((Task<string>[])taskList.ToArray());*/
+                    Task.WaitAll(taskList.ToArray());
+                    foreach (string url in urls.Keys)
+                    {
+                        if ((bool)urls[url]) continue;
+                        current = url;
+                    }
+                    if (current == null) break;
                 }
 
 
@@ -56,9 +63,10 @@ namespace week10
                 lock (this)
                 {
                     numOfTask++;
+                    taskList.Add(Task.Run(() => DownLoadAndParse(current)));
                 }
-                while (numOfTask >= 5) { }
-                Task.Run(() => DownLoadAndParse(current));
+                // while (numOfTask >= 5) { }
+                // Task.Run(() => DownLoadAndParse(current));
 
                 // Task.WaitAll(Task.Run(() => DownLoadAndParse(current)));
                 /*Thread.Sleep(5000);*/
@@ -90,12 +98,13 @@ namespace week10
                 WebClient webClient = new WebClient();
                 webClient.Encoding = Encoding.UTF8;
                 string html = webClient.DownloadString(url);
-                string fileName = count.ToString();
-                File.WriteAllText(fileName, html, Encoding.UTF8);
+                string fileName = "";
                 lock (this)
                 {
                     count++;
+                    fileName = count.ToString();
                 }
+                File.WriteAllText(fileName, html, Encoding.UTF8);
                 Parse(html, url);//解析,并加入新的链接
                 return html;
             }
