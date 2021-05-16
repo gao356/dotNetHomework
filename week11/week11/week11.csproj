@@ -130,7 +130,6 @@
     </Compile>
     <Compile Include="Order.cs" />
     <Compile Include="OrderContext.cs" />
-    <Compile Include="OrderDetail.cs" />
     <Compile Include="OrderDetails.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="Program.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace week08
 {
@@ -9,6 +10,7 @@ namespace week08
         public Good goods { get; set; }
         public int numOfGood { get; set; }
 
+        [Key]
         public int ID { get; set; }
 
         public int OrderID { get; set; }

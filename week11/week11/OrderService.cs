@@ -199,40 +199,55 @@ namespace week08
             return list;
         }
 
-/*        public void Sort()
-        {
-            orderList.Sort();
-        }*/
+        /*        public void Sort()
+                {
+                    orderList.Sort();
+                }*/
 
-/*        public void Sort(IComparer<Order> comparer)
-        {
-            orderList.Sort(comparer);
-        }
+        /*        public void Sort(IComparer<Order> comparer)
+                {
+                    orderList.Sort(comparer);
+                }
 
-        public void ShowAllOrder()
-        {
-            foreach (Order o in orderList)
-            {
-                Console.WriteLine(o);
-            }
-        }*/
+                public void ShowAllOrder()
+                {
+                    foreach (Order o in orderList)
+                    {
+                        Console.WriteLine(o);
+                    }
+                }*/
 
-/*        public void Export()
+        public void Export()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<Order>));
+            using (var context = new OrderContext()) 
+            {
+                orderList = context.Order.ToList();
+            }
             using (FileStream fs = new FileStream("order.xml", FileMode.Create))
             {
                 serializer.Serialize(fs, orderList);
             }
-        }*/
+        }
 
-/*        public void Import()
+        public void Import()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(List<Order>));
             using (FileStream fs = new FileStream("order.xml", FileMode.Open))
             {
                 orderList = (List<Order>)serializer.Deserialize(fs);
             }
-        }*/
+            using (var context = new OrderContext())
+            {
+                foreach (Order order in orderList)
+                {
+                    Order order1 = context.Order.SingleOrDefault(o => o.ID == order.ID);
+                    if (order1 != null) continue;
+                    context.Order.Add(order);
+                }
+                context.SaveChanges();
+            }
+                
+        }
     }
 }

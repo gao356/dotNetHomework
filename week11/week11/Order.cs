@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace week08
@@ -7,6 +8,7 @@ namespace week08
     [Serializable]
     public class Order : IComparable
     {
+        [Key]
         public int ID { get; set; }
         public int CustomerID { get; set; }
         public double TotalPrice { get; set; }
