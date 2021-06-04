@@ -15,6 +15,7 @@ namespace week08
 
         [Key]
         public int ID { get; set; }
+        public List<Order> Orders { get; set; }
 
         public Customer() { }
 

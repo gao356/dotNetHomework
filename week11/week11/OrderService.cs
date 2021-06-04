@@ -119,21 +119,21 @@ namespace week08
             }*/
             using (var context = new OrderContext())
             {
-                var order = context.Order.Include("OrderDetails").Include("Customer");
+                var order = context.Order.Include("OrderDetails").Include("Customer").ToArray<Order>();
                 if (order == null) return null;
                 
 
-                foreach (var o in order)
+                for (int a = 0; a < order.Length; a++)
                 {
-                    for (int i = 0; i < o.OrderDetails.Count; i++)
+                    for (int i = 0; i < order[a].OrderDetails.Count; i++)
                     {
-                        o.OrderDetails[i].goods = context.Good.Where(g => g.ID == o.OrderDetails[i].goods.ID).FirstOrDefault();
+                        order[a].OrderDetails[i].goods = context.Good.Where(g => g.ID == order[a].OrderDetails[i].goods.ID).FirstOrDefault();
                     }
-                    foreach (var detail in o.OrderDetails)
+                    foreach (var detail in order[a].OrderDetails)
                     {
                         if (detail.goods.Name.Equals(name))
                         {
-                            list.Add(o);
+                            list.Add(order[a]);
                             break;
                         }
                     }

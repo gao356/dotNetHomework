@@ -8,6 +8,7 @@ namespace week08
     public class OrderDetails
     {
         public Good goods { get; set; }
+        public Order order { get; set; }
         public int numOfGood { get; set; }
 
         [Key]
