@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace week06
@@ -10,6 +11,10 @@ namespace week06
     {
         public string Name { get; set; }
         public string Address { get; set; }
+
+        [Key]
+        public int CustomerId { get; set; }
+        public Order Order { get; set; }
 
         public Customer() { }
 

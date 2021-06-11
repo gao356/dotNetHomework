@@ -12,6 +12,13 @@ namespace week12
     public class OrderController:ControllerBase
     {
         private OrderService orderService = new OrderService();
+        private Context context;
+
+        public OrderController(Context context)
+        {
+            this.context = context;
+            OrderServiceEF.Context = context;
+        }
 
         [HttpGet("searchById/{id}")]
         public ActionResult<Order> searchOrderById(int id)
